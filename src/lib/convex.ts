@@ -1,5 +1,5 @@
 import { ConvexReactClient } from "convex/react"
 
-const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL!
+const url = process.env.NEXT_PUBLIC_CONVEX_URL
 
-export const convex = new ConvexReactClient(convexUrl)
+export const convex = url && /^https?:\/\//.test(url) ? new ConvexReactClient(url) : null

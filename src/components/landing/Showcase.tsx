@@ -99,10 +99,12 @@ export function Showcase({
             transition={{ duration: 0.6, delay: 0.3 }}
             className="mt-12 text-center"
           >
-            <Button variant="outline" size="lg" onClick={() => {}}>
-              View All Creations
+            <a href="/onboarding">
+            <Button variant="outline" size="lg">
+              Create your first batch
               <ExternalLink className="w-4 h-4 ml-2" />
             </Button>
+            </a>
           </motion.div>
         </div>
       </section>

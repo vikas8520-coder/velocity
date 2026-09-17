@@ -26,7 +26,7 @@ interface GenerationConfig {
 
 export function GenerationPanel({ onGenerate, isGenerating, generatedCount }: GenerationPanelProps) {
   const [config, setConfig] = useState<GenerationConfig>({
-    brandId: "saga-os",
+    brandId: "custom",
     format: "hook-demo",
     platform: "tiktok",
     count: 5,

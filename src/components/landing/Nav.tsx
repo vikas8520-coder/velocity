@@ -4,15 +4,13 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/Button"
+import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import { Sparkles, Menu, X, Music, ArrowRight, Zap, Film, Users, Target, CheckCircle2, Link2, GitBranch, Calendar } from "lucide-react"
 
 const navLinks = [
-  { label: "Tools", href: "/tools" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Compare", href: "/compare" },
-  { label: "Alternatives", href: "/alternatives" },
-  { label: "Industries", href: "/for" },
-  { label: "Resources", href: "/resources" },
+  { label: "How it works", href: "#how" },
+  { label: "Examples", href: "#examples" },
+  { label: "Pricing", href: "#pricing" },
 ]
 
 interface NavProps {
@@ -89,13 +87,18 @@ export function Nav({ className, transparent = false }: NavProps) {
               transition={{ delay: 0.4 }}
               className="flex items-center gap-3 ml-4"
             >
-              <Button variant="ghost" size="sm" onClick={() => {}}>
-                Sign In
-              </Button>
-              <Button variant="primary" size="sm" onClick={() => {}}>
-                Get Started
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              <ThemeToggle />
+              <a href="/sign-in">
+                <Button variant="ghost" size="sm">
+                  Sign In
+                </Button>
+              </a>
+              <a href="/onboarding">
+                <Button variant="primary" size="sm">
+                  Get Started
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </a>
             </motion.div>
           </div>
 
@@ -145,13 +148,18 @@ export function Nav({ className, transparent = false }: NavProps) {
                   transition={{ delay: 0.3 }}
                   className="pt-4 border-t border-card-border space-y-3"
                 >
-                  <Button variant="outline" className="w-full justify-start" onClick={() => { setMobileOpen(false) }}>
-                    Sign In
-                  </Button>
-                  <Button variant="primary" className="w-full justify-start" onClick={() => { setMobileOpen(false) }}>
-                    Get Started
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
+                  <ThemeToggle />
+                  <a href="/sign-in" onClick={() => setMobileOpen(false)}>
+                    <Button variant="outline" className="w-full justify-start">
+                      Sign In
+                    </Button>
+                  </a>
+                  <a href="/onboarding" onClick={() => setMobileOpen(false)}>
+                    <Button variant="primary" className="w-full justify-start">
+                      Get Started
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
                 </motion.div>
               </div>
             </motion.div>

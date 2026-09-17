@@ -228,7 +228,7 @@ export function Pricing({ className, defaultYearly = true }: PricingProps) {
                 variant={tier.ctaVariant} 
                 className="w-full mb-8"
                 size="lg"
-                onClick={() => {}}
+                onClick={() => { window.location.href = "/onboarding" }}
               >
                 {tier.cta}
                 {tier.ctaVariant !== "outline" && <ArrowRight className="w-4 h-4 ml-2" />}

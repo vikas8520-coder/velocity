@@ -15,33 +15,10 @@ import {
   Music, Camera, Play, Zap, Sparkles,
   Mic, MicOff, Volume2, VolumeX
 } from "lucide-react"
-import { CONTENT_FORMATS, PLATFORMS, type Platform, type ContentFormat } from "@/lib/utils"
+import { CONTENT_FORMATS, PLATFORMS, type ContentItem } from "@/lib/utils"
 
 interface SwipeCardProps {
-  content: {
-    id: string
-    title: string
-    script: string
-    caption: string
-    hashtags: string[]
-    format: ContentFormat
-    platform: Platform
-    mediaUrl?: string
-    mediaType?: "image" | "video"
-    referenceContent?: {
-      url: string
-      title: string
-      platform: string
-      views: number
-      engagementRate: number
-    }
-    metadata: {
-      generationPrompt: string
-      modelUsed: string
-      duration?: number
-      aspectRatio: string
-    }
-  }
+  content: ContentItem
   onApprove: (id: string) => void
   onReject: (id: string) => void
   onRegenerate: (id: string) => void
@@ -334,23 +311,10 @@ export function SwipeCard({
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-medium text-sm truncate">{content.referenceContent.title}</p>
-                          <p className="text-xs text-muted-foreground truncate">{content.referenceContent.url}</p>
-                          <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                              <Eye className="w-3 h-3" />
-                              {content.referenceContent.views.toLocaleString()} views
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Zap className="w-3 h-3" />
-                              {(content.referenceContent.engagementRate * 100).toFixed(1)}% engagement
-                            </span>
-                          </div>
+                          <p className="text-xs text-muted-foreground truncate">{content.referenceContent.angle}</p>
+                          <p className="mt-1 text-xs text-muted-foreground">{content.referenceContent.platform}</p>
                         </div>
                       </div>
-                      <Button variant="outline" size="sm" className="mt-2 w-full" onClick={() => window.open(content.referenceContent!.url, "_blank")}>
-                        View Reference
-                        <Share2 className="w-4 h-4 ml-1" />
-                      </Button>
                     </div>
                   )}
                 </div>

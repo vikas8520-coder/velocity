@@ -19,7 +19,6 @@ const showcaseItems: ShowcaseItem[] = [
     title: "3 AI Tools That Replaced My $500/mo Stack",
     description: "Hook demo showing how to save thousands on SaaS subscriptions",
     thumbnail: "https://picsum.photos/seed/velocity1/600/1067",
-    videoUrl: "https://media.aftermark.ai/usefastlane/video/demo-1.mp4",
     type: "hook",
     platform: "tiktok",
     tags: ["AI", "SaaS", "Productivity", "Tools"],
@@ -40,7 +39,6 @@ const showcaseItems: ShowcaseItem[] = [
     title: "Laundry Hack: Never Sort Again",
     description: "Before/After showing the myth of laundry sorting debunked",
     thumbnail: "https://picsum.photos/seed/velocity3/600/1067",
-    videoUrl: "https://media.aftermark.ai/usefastlane/video/demo-3.mp4",
     type: "before-after",
     platform: "youtube",
     tags: ["LifeHack", "Laundry", "TimeSaver", "Home"],
@@ -81,7 +79,6 @@ const showcaseItems: ShowcaseItem[] = [
     title: "The $0 to $10K/Month Automation Stack",
     description: "Hook demo revealing the exact tools for business automation",
     thumbnail: "https://picsum.photos/seed/velocity7/600/1067",
-    videoUrl: "https://media.aftermark.ai/usefastlane/video/demo-7.mp4",
     type: "hook",
     platform: "tiktok",
     tags: ["Automation", "Business", "NoCode", "Income"],
@@ -109,11 +106,14 @@ export default function LandingPage() {
         <Hero />
         
         {/* How It Works */}
+        <div id="how">
         <ScrollReveal direction="up" delay={0.1} className="relative">
           <HowItWorks />
         </ScrollReveal>
+        </div>
 
         {/* Showcase */}
+        <div id="examples">
         <ScrollReveal direction="up" delay={0.15} className="relative">
           <Showcase
             items={showcaseItems}
@@ -122,6 +122,7 @@ export default function LandingPage() {
             variant="grid"
           />
         </ScrollReveal>
+        </div>
 
         {/* Testimonials */}
         <ScrollReveal direction="up" delay={0.2} className="relative">
@@ -129,9 +130,11 @@ export default function LandingPage() {
         </ScrollReveal>
 
         {/* Pricing */}
+        <div id="pricing">
         <ScrollReveal direction="up" delay={0.25} className="relative">
           <Pricing />
         </ScrollReveal>
+        </div>
 
         {/* CTA Section */}
         <ScrollReveal direction="fade" delay={0.1} className="relative">
@@ -149,14 +152,18 @@ export default function LandingPage() {
                   Start free, upgrade when you're ready. No credit card required.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                  <Button size="lg" onClick={() => {}}>
-                    Start Free — No Credit Card
-                    <ArrowRightIcon className="w-4 h-4 ml-2" />
-                  </Button>
-                  <Button variant="outline" size="lg" onClick={() => {}}>
-                    Watch Demo
-                    <PlayIcon className="w-4 h-4 ml-2" />
-                  </Button>
+                  <a href="/onboarding">
+                    <Button size="lg">
+                      Start Free — No Credit Card
+                      <ArrowRightIcon className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
+                  <a href="/app">
+                    <Button variant="outline" size="lg">
+                      Open studio
+                      <PlayIcon className="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
                 </div>
                 <p className="text-sm text-fg-muted mt-6">
                   Free tier forever • Cancel anytime • SOC 2 certified

@@ -6,12 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatNumber(num: number): string {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + "M"
-  }
-  if (num >= 1000) {
-    return (num / 1000).toFixed(1) + "K"
-  }
+  if (num >= 1_000_000) return (num / 1_000_000).toFixed(1) + "M"
+  if (num >= 1_000) return (num / 1_000).toFixed(1) + "K"
   return num.toString()
 }
 
@@ -22,48 +18,100 @@ export function formatDuration(seconds: number): string {
 }
 
 export const PLATFORMS = [
-  { id: "tiktok", name: "TikTok", icon: "music", color: "#000000" },
+  { id: "tiktok", name: "TikTok", icon: "music", color: "#010101" },
   { id: "instagram", name: "Instagram Reels", icon: "camera", color: "#E4405F" },
   { id: "youtube", name: "YouTube Shorts", icon: "play", color: "#FF0000" },
+  { id: "linkedin", name: "LinkedIn", icon: "share", color: "#0A66C2" },
 ] as const
 
-export type Platform = typeof PLATFORMS[number]["id"]
+export type Platform = (typeof PLATFORMS)[number]["id"]
 
 export const CONTENT_FORMATS = [
-  { id: "hook-demo", name: "Hook Demo", description: "Problem → Solution in 15s" },
-  { id: "slideshow", name: "Slideshow", description: "Carousel-style educational content" },
-  { id: "trending-adapt", name: "Trending Adaptation", description: "Adapt viral content to your niche" },
-  { id: "storytelling", name: "Storytelling", description: "Personal journey narrative" },
-  { id: "before-after", name: "Before/After", description: "Transformation showcase" },
+  { id: "slideshow", name: "Slideshow", description: "TikTok photo carousel. One idea per slide." },
+  { id: "wall-of-text", name: "Wall of text", description: "Talking-head rant, product plug at the end." },
+  { id: "video-hook", name: "Hook + demo", description: "3s shock hook, then your product on screen." },
+  { id: "green-screen", name: "Green screen", description: "Meme / reaction remix of a trending clip." },
 ] as const
 
-export type ContentFormat = typeof CONTENT_FORMATS[number]["id"]
+export type ContentFormat =
+  | (typeof CONTENT_FORMATS)[number]["id"]
+  | "hook-demo"
+  | "trending-adapt"
+  | "storytelling"
+  | "before-after"
+
+export function canonicalFormat(format: string | undefined): (typeof CONTENT_FORMATS)[number]["id"] {
+  if (format === "slideshow") return "slideshow"
+  if (format === "wall-of-text") return "wall-of-text"
+  if (format === "green-screen") return "green-screen"
+  if (format === "video-hook" || format === "hook-demo") return "video-hook"
+  if (format === "before-after" || format === "trending-adapt") return "video-hook"
+  if (format === "storytelling") return "wall-of-text"
+  return "slideshow"
+}
 
 export const BRANDS = [
-  { id: "saga-os", name: "SAGA OS", description: "AI-powered life operating system", color: "#8B5CF6" },
-  { id: "aiarsenal", name: "AIArsenal", description: "AI tools directory & reviews", color: "#3B82F6" },
-  { id: "laundryapp", name: "LaundryApp", description: "On-demand laundry service", color: "#10B981" },
-  { id: "custom", name: "Custom Brand", description: "Add your own brand", color: "#6B7280" },
+  { id: "custom", name: "Custom Brand", description: "Your product, learned from a URL", color: "#be185d" },
 ] as const
 
-export type BrandId = typeof BRANDS[number]["id"]
+export type BrandId = (typeof BRANDS)[number]["id"] | string
+
+export type ContentStatus =
+  | "generating"
+  | "pending_review"
+  | "approved"
+  | "rejected"
+  | "scheduled"
+  | "published"
+  | "failed"
+
+export interface BrandProfile {
+  id: string
+  name: string
+  websiteUrl: string
+  description: string
+  tagline: string
+  color: string
+  niches: string[]
+  targetAudience: string
+  tone: string
+  logoUrl?: string
+  media?: string[]
+  createdAt: number
+}
+
+export function screenshotUrl(site: string) {
+  const normalized = /^https?:\/\//i.test(site) ? site : `https://${site}`
+  return `https://image.thum.io/get/width/720/crop/1280/noanimate/${normalized}`
+}
+
+export function proxiedAsset(url: string) {
+  return `/api/asset?url=${encodeURIComponent(url)}`
+}
+
+export interface ContentSlide {
+  headline: string
+  body: string
+}
 
 export interface ContentItem {
   id: string
+  brandId: string
   title: string
   script: string
   caption: string
   hashtags: string[]
+  slides?: ContentSlide[]
   format: ContentFormat
   platform: Platform
   mediaUrl?: string
+  posterUrl?: string
   mediaType?: "image" | "video"
+  visualPrompt?: string
   referenceContent?: {
-    url: string
     title: string
+    angle: string
     platform: string
-    views: number
-    engagementRate: number
   }
   metadata: {
     generationPrompt: string
@@ -71,8 +119,22 @@ export interface ContentItem {
     duration?: number
     aspectRatio: string
   }
-  brandId: BrandId
-  status?: "generating" | "pending_review" | "approved" | "rejected" | "scheduled" | "published" | "failed"
-  createdAt?: number
-  updatedAt?: number
+  status: ContentStatus
+  scheduledAt?: number
+  createdAt: number
+  updatedAt: number
+}
+
+export interface ScheduledPost {
+  id: string
+  contentId: string
+  platform: Platform
+  caption: string
+  scheduledAt: number
+  status: "pending" | "posted" | "failed"
+  createdAt: number
+}
+
+export function newId(prefix: string) {
+  return `${prefix}_${crypto.randomUUID()}`
 }

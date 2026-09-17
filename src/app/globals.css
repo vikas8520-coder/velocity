@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   /* Premium Silver Theme - Matte Finish */
@@ -7,8 +8,8 @@
   --color-bg-muted: #e8e8ea;
   --color-bg-deep: #d4d4d8;
   --color-fg: #18181b;
-  --color-fg-muted: #525252;
-  --color-fg-subtle: #71717a;
+  --color-fg-muted: #3f3f46;
+  --color-fg-subtle: #52525b;
   
   --color-primary: #be185d;
   --color-primary-hover: #9f1239;
@@ -560,72 +561,64 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0f0f0f;
-    --color-bg-elevated: #18181b;
-    --color-bg-muted: #1f1f23;
-    --color-bg-deep: #2a2a2f;
-    --color-fg: #fafafa;
-    --color-fg-muted: #a1a1aa;
-    --color-fg-subtle: #71717a;
-    
-    --color-primary: #f43f5e;
-    --color-primary-hover: #fb2c54;
-    --color-primary-light: #4c0519;
-    --color-primary-glow: #fb2c54;
-    
-    --color-secondary: #eab308;
-    --color-secondary-hover: #facc15;
-    --color-secondary-light: #422006.
-    
-    --color-border: #27272a;
-    --color-border-strong: #3f3f46;
-    --color-border-subtle: #1f1f23.
-    
-    --color-card: #18181b.
-    --color-card-border: #27272a.
-    --color-card-hover: #1f1f23.
-    
-    --color-input: #18181b.
-    --color-input-border: #3f3f46.
-    --color-input-focus: #f43f5e.
-    
-    --shadow-glow: 0 0 40px -10px rgba(244, 63, 94, 0.2).
-    --shadow-glow-gold: 0 0 40px -10px rgba(234, 179, 8, 0.2).
-  }
-  
-  .glass {
-    background: rgba(24, 24, 27, 0.85);
-    border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-card);
-  }
-  
-  .card {
-    background: #18181b;
-    border-color: #27272a;
-    box-shadow: var(--shadow-card);
-  }
-  
-  .card:hover {
-    box-shadow: var(--shadow-card-hover);
-    border-color: var(--color-border).
-  }
-  
-  .input-premium {
-    background: #18181b;
-    border-color: #3f3f46;
-    color: white;
-    placeholder: #71717a.
-  }
-  
-  .btn-primary {
-    background: #f43f5e;
-    hover: #fb2c54.
-  }
-  
-  .btn-secondary {
-    background: #18181b;
-    hover: #27272a;
-  }
+html.dark {
+  --color-bg: #0c0c0e;
+  --color-bg-elevated: #16161a;
+  --color-bg-muted: #1c1c22;
+  --color-bg-deep: #27272f;
+  --color-fg: #f4f4f5;
+  --color-fg-muted: #d4d4d8;
+  --color-fg-subtle: #a1a1aa;
+
+  --color-primary: #fb7185;
+  --color-primary-hover: #fda4af;
+  --color-primary-light: #4c0519;
+  --color-primary-glow: #fb7185;
+
+  --color-secondary: #facc15;
+  --color-secondary-hover: #fde047;
+  --color-secondary-light: #422006;
+
+  --color-accent: #a1a1aa;
+  --color-accent-hover: #d4d4d8;
+
+  --color-border: #2a2a32;
+  --color-border-strong: #3f3f46;
+  --color-border-subtle: #1f1f27;
+
+  --color-card: #16161a;
+  --color-card-border: #2a2a32;
+  --color-card-hover: #1c1c22;
+
+  --color-input: #16161a;
+  --color-input-border: #3f3f46;
+  --color-input-focus: #fb7185;
+
+  --color-success: #86efac;
+  --color-success-light: #052e16;
+  --color-success-border: #166534;
+
+  --color-warning: #fde047;
+  --color-warning-light: #422006;
+  --color-warning-border: #a16207;
+
+  --color-destructive: #fda4af;
+  --color-destructive-light: #4c0519;
+  --color-destructive-border: #9f1239;
+
+  --shadow-glow: 0 0 40px -10px rgba(251, 113, 133, 0.28);
+  --shadow-glow-gold: 0 0 40px -10px rgba(250, 204, 21, 0.22);
+  --noise-opacity: 0.05;
+}
+
+html.dark .glass,
+html.dark .glass-strong {
+  background: rgba(22, 22, 26, 0.88);
+  border-color: var(--color-border);
+}
+
+html.dark .card,
+html.dark .card-strong {
+  background: var(--color-card);
+  border-color: var(--color-card-border);
 }

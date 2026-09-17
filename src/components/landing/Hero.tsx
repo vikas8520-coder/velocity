@@ -1,8 +1,9 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { FormEvent, useEffect, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion"
-import { ArrowRight, Sparkles, Zap, CheckCircle2, Play, MousePointerClick } from "lucide-react"
+import { ArrowRight, Sparkles, CheckCircle2, MousePointerClick } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils"
 
@@ -11,6 +12,8 @@ interface HeroProps {
 }
 
 export function Hero({ className }: HeroProps) {
+  const router = useRouter()
+  const [url, setUrl] = useState("")
   const [mounted, setMounted] = useState(false)
   const scrollY = useMotionValue(0)
   const { scrollYProgress } = useScroll({ target: useRef<HTMLDivElement>(null), offset: ["start start", "end start"] })
@@ -138,39 +141,33 @@ export function Hero({ className }: HeroProps) {
             Create, schedule, and publish AI-generated shorts across TikTok, Instagram Reels, YouTube Shorts, and LinkedIn — all from one platform.
           </motion.p>
 
-          {/* CTA Buttons with premium hover effects */}
-          <motion.div
+          <motion.form
+            onSubmit={(e: FormEvent) => {
+              e.preventDefault()
+              const next = url.trim() ? `/onboarding?url=${encodeURIComponent(url.trim())}` : "/onboarding"
+              router.push(next)
+            }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
+            className="mx-auto mb-16 flex w-full max-w-xl flex-col gap-3 sm:flex-row"
           >
-            <Button 
-              size="lg" 
-              className="w-full sm:w-auto group relative overflow-hidden"
-              onClick={() => {}}
-            >
-              <span className="relative z-10">Start Free — No Credit Card</span>
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-primary to-rose-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              />
-              <ArrowRight 
-                className="w-4 h-4 relative z-10 transition-transform group-hover:translate-x-1" 
-              />
+            <label htmlFor="hero-url" className="sr-only">
+              Website URL
+            </label>
+            <input
+              id="hero-url"
+              type="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="https://yourproduct.com"
+              className="h-12 flex-1 rounded-2xl border border-card-border bg-white px-4 text-sm shadow-sm"
+            />
+            <Button type="submit" size="lg" className="sm:w-auto">
+              Start Blitz
+              <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="w-full sm:w-auto group relative overflow-hidden"
-              onClick={() => {}}
-            >
-              <Play className="w-4 h-4 mr-2 relative z-10" />
-              <span className="relative z-10">Watch Demo</span>
-              <motion.div
-                className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              />
-            </Button>
-          </motion.div>
+          </motion.form>
 
           {/* Trust indicators with stagger */}
           <motion.div
