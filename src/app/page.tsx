@@ -2,16 +2,15 @@
 
 import { Nav } from "@/components/landing/Nav"
 import { Hero } from "@/components/landing/Hero"
-import { Logowall, defaultLogos } from "@/components/landing/Logowall"
 import { HowItWorks } from "@/components/landing/HowItWorks"
 import { Showcase } from "@/components/landing/Showcase"
 import { Testimonials } from "@/components/landing/Testimonials"
 import { Pricing } from "@/components/landing/Pricing"
 import { Footer } from "@/components/landing/Footer"
 import { Button } from "@/components/ui/Button"
-import { motion } from "framer-motion"
 import { ArrowRight as ArrowRightIcon, Play as PlayIcon } from "lucide-react"
 import type { ShowcaseItem } from "@/components/landing/Showcase"
+import { motion } from "framer-motion"
 import { ScrollReveal } from "@/components/ui/ScrollReveal"
 
 const showcaseItems: ShowcaseItem[] = [
@@ -109,23 +108,6 @@ export default function LandingPage() {
         {/* Hero */}
         <Hero />
         
-        {/* Logowall */}
-        <ScrollReveal direction="fade" delay={0.1} className="py-12 border-y border-card-border bg-bg-muted/30">
-          <section className="py-12 border-y border-card-border bg-bg-muted/30">
-            <div className="container-main">
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-center text-sm text-fg-muted mb-8 uppercase tracking-wider"
-              >
-                Trusted by 10,000+ teams worldwide
-              </motion.p>
-              <Logowall logos={defaultLogos} />
-            </div>
-          </section>
-        </ScrollReveal>
-
         {/* How It Works */}
         <ScrollReveal direction="up" delay={0.1} className="relative">
           <HowItWorks />
