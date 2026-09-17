@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform, useMotionValue } from "framer-motion"
 import { ArrowRight, Sparkles, Zap, CheckCircle2, Play, MousePointerClick } from "lucide-react"
 import { Button } from "@/components/ui/Button"
 import { cn } from "@/lib/utils"
@@ -80,9 +80,9 @@ export function Hero({ className }: HeroProps) {
         className="fixed top-0 left-0 right-0 h-0.5 -z-10 bg-transparent"
         style={{
           background: "linear-gradient(to right, var(--color-primary), var(--color-secondary))",
+          transformOrigin: "left center",
+          scaleX: scrollYProgress,
         }}
-        animate={{ scaleX: scrollYProgress }}
-        style={{ transformOrigin: "left center" }}
       />
 
       <div className="container-main relative">
@@ -222,7 +222,6 @@ export function Hero({ className }: HeroProps) {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.7 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 whileHover={{ scale: 1.1, y: -4 }}
-                transition={{ duration: 0.3 }}
                 className="flex items-center gap-2 text-xs font-medium text-fg-muted group cursor-pointer"
               >
                 {item.icon}
@@ -253,7 +252,7 @@ export function Hero({ className }: HeroProps) {
                 className="w-1 h-6 bg-current/30 rounded-full"
               />
             </motion.div>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>

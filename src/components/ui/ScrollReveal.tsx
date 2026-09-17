@@ -29,14 +29,14 @@ export function ScrollReveal({
   direction = "up",
   distance = 40,
   duration = 0.8,
-  easing = [0.22, 1, 0.36, 1],
+  easing: any = [0.22, 1, 0.36, 1],
   staggerChildren = false,
   staggerDelay = 0.08,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { 
     once: triggerOnce, 
-    margin: rootMargin,
+    margin: rootMargin as any,
     amount: threshold 
   })
   
@@ -74,7 +74,7 @@ export function ScrollReveal({
     scale: 1,
   })
 
-  const transition = {
+  const transition: any = {
     duration,
     delay,
     ease: [0.22, 1, 0.36, 1],
@@ -186,7 +186,7 @@ export function Counter({
   className 
 }: CounterProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const isInView = useInView(ref, { once: true, margin: "-100px" as any })
   const [count, setCount] = useState(0)
 
   useEffect(() => {
@@ -236,7 +236,7 @@ export function ProgressBar({
   animated = true
 }: ProgressBarProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-50px" })
+  const isInView = useInView(ref, { once: true, margin: "-50px" as any })
   const [width, setWidth] = useState(0)
 
   useEffect(() => {
@@ -294,7 +294,7 @@ export function TextReveal({
   staggerDelay = 0.03 
 }: TextRevealProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-50px" })
+  const isInView = useInView(ref, { once: true, margin: "-50px" as any })
 
   const text = typeof children === "string" ? children : String(children)
   const words = stagger ? text.split(" ") : [text]

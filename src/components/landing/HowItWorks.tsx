@@ -1,13 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { motion, useInView, useScroll, useTransform } from "framer-motion"
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/Button"
 import { 
   Zap, Sparkles, Film, Users, 
   Calendar, Upload, BarChart2, Target,
-  ArrowRight, CheckCircle2, Play, Shield, Globe, Award, Bot, Layers, Cpu, Infinite, Wand2, Mic, Share2, ExternalLink
+  ArrowRight, CheckCircle2, Play, Shield, Globe, Award, Bot, Layers, Cpu, Wand2, Mic, Share2, ExternalLink
 } from "lucide-react"
 import { VideoPlayer } from "@/components/ui/VideoPlayer"
 
@@ -123,14 +123,39 @@ export function HowItWorks({ className }: HowItWorksProps) {
 
         <div className="grid lg:grid-cols-3 gap-8 mb-16">
           {steps.map((step, index) => (
-            <StepCard 
-              key={step.number} 
-              step={step} 
-              index={index}
-              isActive={currentStep === index}
+            <motion.article
+              key={step.number}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
               onClick={() => setCurrentStep(index)}
-            />
-          )
+              className={cn(
+                "group relative card cursor-pointer p-8 flex flex-col overflow-hidden",
+                currentStep === index && "ring-2 ring-primary/30 border-primary/40"
+              )}
+            >
+              <div className="mb-6 flex items-center gap-3">
+                <span className="font-display font-bold text-3xl text-primary/20">
+                  {step.number}
+                </span>
+                <div className="w-full h-px bg-border" />
+              </div>
+              <div className="mb-6 w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <step.icon className="w-7 h-7 text-primary" />
+              </div>
+              <h3 className="heading-4 mb-3">{step.title}</h3>
+              <p className="text-fg-muted mb-6 flex-1 text-sm leading-relaxed">{step.description}</p>
+              <ul className="space-y-2">
+                {step.features.map((feature) => (
+                  <li key={feature} className="flex items-center gap-3 text-sm text-fg-muted">
+                    <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.article>
+          ))}
         </div>
 
         {/* Mobile stepper */}
@@ -150,7 +175,7 @@ export function HowItWorks({ className }: HowItWorksProps) {
                   currentStep === index
                     ? "bg-primary text-white"
                     : "bg-white text-fg-muted hover:bg-primary/5"
-                )
+                )}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -277,7 +302,8 @@ export function HowItWorks({ className }: HowItWorksProps) {
                             </motion.div>
 <p className="text-fg-muted">Step {steps[currentStep].number} Demo</p>
                           </div>
-                        )
+                        </div>
+                        )}
                       <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
                         <motion.span
                           initial={{ opacity: 0, x: -20 }}
@@ -312,7 +338,7 @@ export function HowItWorks({ className }: HowItWorksProps) {
                     currentStep === index
                       ? "bg-primary w-10"
                       : "bg-zinc-300 hover:bg-zinc-400"
-                  )
+                  )}
                   whileHover={{ scale: 1.3 }}
                   whileTap={{ scale: 0.9 }}
                   aria-label={`Go to step ${index + 1}`}
